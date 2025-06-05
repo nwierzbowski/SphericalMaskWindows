@@ -102,6 +102,6 @@ void ballquery_launcher(int m, float radius, int nsample,
     if (cudaSuccess != err)
     {
         fprintf(stderr, "CUDA kernel failed : %s\n", cudaGetErrorString(err));
-        exit(-1);
+        throw std::runtime_error("CUDA kernel failed: " + std::string(cudaGetErrorString(err)));
     }
 }

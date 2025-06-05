@@ -1,6 +1,6 @@
 /*
 batch version of ball query, modified from the original implementation of official PointNet++ codes.
-Written by PointNeXt team 
+Written by PointNeXt team
 All Rights Reserved 2022.
 */
 
@@ -9,24 +9,23 @@ All Rights Reserved 2022.
 #include <ATen/cuda/CUDAContext.h>
 #include "ballquery_cuda_kernel.h"
 
-
-#define CHECK_CUDA(x)                                                               \
-  do                                                                                \
-  {                                                                                 \
-    if (!x.type().is_cuda())                                                        \
-    {                                                                               \
-      fprintf(stderr, "%s must be CUDA tensor at %s:%d\n", #x, __FILE__, __LINE__); \
-      exit(-1);                                                                     \
-    }                                                                               \
+#define CHECK_CUDA(x)                                                                                                     \
+  do                                                                                                                      \
+  {                                                                                                                       \
+    if (!x.type().is_cuda())                                                                                              \
+    {                                                                                                                     \
+      fprintf(stderr, "%s must be CUDA tensor at %s:%d\n", #x, __FILE__, __LINE__);                                       \
+      throw std::runtime_error(std::string(#x) + " must be CUDA tensor at " + __FILE__ + ":" + std::to_string(__LINE__)); \
+    }                                                                                                                     \
   } while (0)
-#define CHECK_CONTIGUOUS(x)                                                               \
-  do                                                                                      \
-  {                                                                                       \
-    if (!x.is_contiguous())                                                               \
-    {                                                                                     \
-      fprintf(stderr, "%s must be contiguous tensor at %s:%d\n", #x, __FILE__, __LINE__); \
-      exit(-1);                                                                           \
-    }                                                                                     \
+#define CHECK_CONTIGUOUS(x)                                                                                                     \
+  do                                                                                                                            \
+  {                                                                                                                             \
+    if (!x.is_contiguous())                                                                                                     \
+    {                                                                                                                           \
+      fprintf(stderr, "%s must be contiguous tensor at %s:%d\n", #x, __FILE__, __LINE__);                                       \
+      throw std::runtime_error(std::string(#x) + " must be contiguous tensor at " + __FILE__ + ":" + std::to_string(__LINE__)); \
+    }                                                                                                                           \
   } while (0)
 #define CHECK_INPUT(x) \
   CHECK_CUDA(x);       \

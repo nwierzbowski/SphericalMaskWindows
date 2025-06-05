@@ -187,7 +187,7 @@ int ballquery_batch_p_cuda(int n, int meanActive, float radius,
   err = cudaGetLastError();
   if (cudaSuccess != err) {
     fprintf(stderr, "CUDA kernel failed : %s\n", cudaGetErrorString(err));
-    exit(-1);
+    throw std::runtime_error("CUDA kernel failed" + std::string(cudaGetErrorString(err)));
   }
 
   cudaMemcpy(&cumsum, p_cumsum, sizeof(int), cudaMemcpyDeviceToHost);
@@ -222,7 +222,7 @@ int ballquery_batch_p_boxiou_cuda(int n, int meanActive, float radius,
   err = cudaGetLastError();
   if (cudaSuccess != err) {
     fprintf(stderr, "CUDA kernel failed : %s\n", cudaGetErrorString(err));
-    exit(-1);
+    throw std::runtime_error("CUDA kernel failed" + std::string(cudaGetErrorString(err)));
   }
 
   cudaMemcpy(&cumsum, p_cumsum, sizeof(int), cudaMemcpyDeviceToHost);

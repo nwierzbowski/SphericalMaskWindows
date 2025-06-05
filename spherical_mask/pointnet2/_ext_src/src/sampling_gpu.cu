@@ -760,6 +760,6 @@ void furthest_point_sampling_with_dist_kernel_wrapper(int b, int n, int m,
     err = cudaGetLastError();
     if (cudaSuccess != err) {
         fprintf(stderr, "CUDA kernel failed : %s\n", cudaGetErrorString(err));
-        exit(-1);
+        throw std::runtime_error("CUDA kernel failed" + std::string(cudaGetErrorString(err)));
     }
 }
