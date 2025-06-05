@@ -1,8 +1,16 @@
 #!/bin/bash
+
+# Determine Python command
+if command -v python >/dev/null 2>&1; then
+  PYTHON_CMD="python"
+else
+  PYTHON_CMD="python3"
+fi
+
 echo Copy data
-python3 split_data.py
+$PYTHON_CMD split_data.py
 echo Preprocess data
-python3 prepare_data_inst.py --data_split train
-python3 prepare_data_inst.py --data_split val
-python3 prepare_data_inst.py --data_split test
-python3 prepare_superpoint.py
+$PYTHON_CMD prepare_data_inst.py --data_split train
+$PYTHON_CMD prepare_data_inst.py --data_split val
+$PYTHON_CMD prepare_data_inst.py --data_split test
+$PYTHON_CMD prepare_superpoint.py
